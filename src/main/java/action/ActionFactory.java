@@ -11,11 +11,11 @@ public class ActionFactory {
   private static final Logger logger = LogManager.getLogger();
 
   public static Action getAction(HttpServletRequest request) {
-    Map<String, Action> actions = (ConcurrentHashMap<String, Action>) request.getServletContext()
+    ConcurrentHashMap<String, Action> actions = (ConcurrentHashMap<String, Action>) request.getServletContext()
         .getAttribute("actions");
     String path = request.getRequestURI().replaceAll(".*/page","");
     logger.debug("Path:"+path);
 
-    return actions.get(path);
+    return actions.getOrDefault(path,new DefaultAction());
   }
 }

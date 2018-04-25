@@ -16,15 +16,17 @@ public class Servlet extends HttpServlet {
 
   private final static Logger logger = LogManager.getLogger();
 
+  @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     logger.debug("Servlet starts");
 
     try {
       Action action = ActionFactory.getAction(request);
+
       String view = action.execute(request, response);
 
-      request.getRequestDispatcher("/jsp/" + view + ".jsp").forward(request, response);
+      request.getRequestDispatcher("/WEB-INF/jsp/" + view + ".jsp").forward(request, response);
 
     } catch (Exception e) {
       throw new ServletException("Executing action failed.", e);
